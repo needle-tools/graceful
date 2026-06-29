@@ -1,0 +1,38 @@
+feed_url:
+  type: string
+  default: "https://marketer.needle.tools/api/whats-new"
+tracker_url:
+  type: string
+  default: "https://marketer.needle.tools/whatsnew.js"
+surface:
+  type: string
+  default: "forum.needle.tools"
+  description: "Value sent as ?surface= — attributes where the hint was shown."
+license_state:
+  type: enum
+  default: "none"
+  choices:
+    - "none"
+    - "any"
+  description: "?license= — 'none' shows upsell hints to anonymous/community visitors; 'any' suppresses upsells."
+extra_tags:
+  type: string
+  default: ""
+  description: "Optional comma-separated tags sent as ?tags= to bias ranking (e.g. webxr,compression)."
+eyebrow_label:
+  type: string
+  default: "New at Needle"
+  description: "Small brand label shown above the title. Blank to hide."
+logo_url:
+  type: string
+  default: ""
+  description: "Optional logo shown beside the eyebrow label. Use a STABLE URL (e.g. on needle.tools), not a preview build. Blank to hide."
+rotate:
+  type: bool
+  default: true
+  description: "Cycle through eligible hints over time instead of showing a single pick."
+rotate_interval_seconds:
+  type: integer
+  default: 10
+  min: 4
+  max: 120

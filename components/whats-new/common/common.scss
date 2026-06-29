@@ -1,0 +1,126 @@
+// Needle "What's New" feed slot — rendered at the bottom of a topic
+// (above Suggested Topics). Subtle, on-brand banner.
+//
+// Colour roles (set per-card in JS, default to the Needle brand gradient,
+// overridden by feed `colors` when an announcement provides them):
+//   --nwn-grad-1 / --nwn-grad-2  brand gradient stops (yellow-green → teal)
+//   --nwn-cta-fg                 readable CTA text colour
+
+// Needle brand greens for fixed accents (eyebrow text, focus ring).
+$needle-dark-green: #74af52;
+
+.needle-wn-slot {
+  min-height: 0; // collapses cleanly when the feed has nothing
+}
+
+.needle-wn {
+  position: relative;
+  margin: 1.5em 0;
+  min-height: 84px; // reserve height so rotation/crossfade never reflows the page
+}
+
+.needle-wn__card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.25em;
+  padding: 0.95em 1.2em;
+  border-radius: 0.6em;
+  opacity: 1;
+  transition: opacity 0.4s ease, box-shadow 0.2s ease; // FADE_MS = 400 in JS
+
+  // Solid Needle-green border, same colour as the "New at Needle" eyebrow.
+  border: 1.5px solid $needle-dark-green;
+  background: var(--secondary);
+
+  // crossfade states
+  &--enter {
+    opacity: 0;
+  }
+  &--leave {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.needle-wn__body {
+  flex: 0 1 auto;
+  min-width: 0; // allow the text to wrap inside the flex row
+  max-width: 62ch; // reasonable line length on wide screens
+}
+
+.needle-wn__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-bottom: 0.25em;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $needle-dark-green;
+}
+
+.needle-wn__logo {
+  display: block;
+  height: 1.15em;
+  width: auto;
+}
+
+.needle-wn__title {
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--primary);
+  text-wrap: balance; // tidy line breaks for short titles
+}
+
+.needle-wn__text {
+  margin: 0.15em 0 0;
+  color: var(--primary-high);
+  line-height: 1.4;
+  text-wrap: pretty; // avoid orphans on the wrapped paragraph
+}
+
+.needle-wn__cta {
+  flex: 0 0 auto;
+  align-self: center;
+  margin-left: auto; // push the CTA to the right edge
+  white-space: nowrap;
+  padding: 0.55em 1.15em;
+  border-radius: 0.45em;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--nwn-cta-fg, #1a1a1a);
+  background: var(--nwn-cta-bg, #99cc33);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    color: #fff;
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+  }
+  &:active {
+    transform: translateY(0) scale(0.99);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  }
+  &:focus-visible {
+    outline: 2px solid $needle-dark-green;
+    outline-offset: 2px;
+  }
+}
+
+// Respect reduced-motion: drop transforms/filter on hover (rotation is also off in JS).
+.needle-wn--no-motion {
+  .needle-wn__cta {
+    transition: none;
+
+    &:hover {
+      transform: none;
+      filter: none;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+  }
+}

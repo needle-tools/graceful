@@ -1,0 +1,5 @@
+{{! Renders an empty, fixed-size slot at the bottom of a topic (above Suggested Topics).
+    The api-initializer fetches the feed and populates this node imperatively so we can
+    do weighted-random selection, rotation, crossfade, and third-party impression/hover
+    tracking without fighting Glimmer reactivity. }}
+<div class="needle-wn-slot" data-needle-whats-new-slot></div>
