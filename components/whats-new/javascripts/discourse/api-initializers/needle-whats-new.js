@@ -264,11 +264,36 @@ export default apiInitializer("1.8.0", (api) => {
     }
   }
 
-  // The connector renders the slot on topic pages; populate it once it exists.
-  api.onPageChange(() => {
+  let observer = null;
+
+  function tryRender() {
     const slot = document.querySelector(SLOT_SELECTOR);
     if (slot) {
       render(slot);
+      return true;
     }
+    return false;
+  }
+
+  // The connector's slot lives at the bottom of the topic (above Suggested Topics).
+  // In long, lazy-loaded threads that DOM node doesn't exist on initial page load —
+  // it mounts only once the reader scrolls to the end. A single check on page change
+  // therefore misses it, so we also watch for the slot to appear and render it then.
+  api.onPageChange(() => {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+    if (tryRender()) {
+      return; // slot already present (short threads)
+    }
+    const root = document.querySelector("#main-outlet") || document.body;
+    observer = new MutationObserver(() => {
+      if (tryRender()) {
+        observer.disconnect();
+        observer = null;
+      }
+    });
+    observer.observe(root, { childList: true, subtree: true });
   });
 });
