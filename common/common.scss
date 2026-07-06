@@ -401,6 +401,20 @@ span.user-title {
   }
 }
 
+// Solved plugin: accepted answer accordion
+
+.accepted-answers.d-post-accordion {
+  --d-post-accordion-radius: 8px;
+  --d-post-accordion-background: #f0f4ef;
+  --d-post-accordion-item-header-background: var(--d-post-accordion-background);
+  --d-post-accordion-header-background: #9ecc66;
+  --d-post-accordion-header-border-color: #9ecc66;
+  .d-post-accordion-item__read-more a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
 // No-js view
 .crawler > #main-outlet,
 noscript > #main-outlet {
